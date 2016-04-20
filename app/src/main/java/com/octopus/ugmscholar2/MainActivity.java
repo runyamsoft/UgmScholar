@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
         rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
 
-        final RvAdapter rvAdapter = new RvAdapter(itemDatas);
+        final RvAdapter rvAdapter = new RvAdapter(itemDatas, new RvAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ItemData item) {
+                Log.d("ASDSAD", item.getTitle());
+            }
+        });
         rv.setAdapter(rvAdapter);
         rv.addOnScrollListener(new JazzyRecyclerViewScrollListener());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -97,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         tmpData.setAuthor(article.select(".uk-article-meta a").first().text());
                         tmpData.setTgl(article.select(".uk-article-meta time").first().text());
                         if (article.select("img").size() > 0) {
-                            tmpData.setImgUrl(article.select("img").first().text());
+                            tmpData.setImgUrl("http://ditmawa.ugm.ac.id" + article.select("img").first().attr("src"));
                         } else {
                             tmpData.setImgUrl("");
                         }

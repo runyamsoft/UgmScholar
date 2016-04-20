@@ -1,11 +1,17 @@
 package com.octopus.ugmscholar2;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.koushikdutta.ion.Ion;
 
 import java.util.List;
 
@@ -14,11 +20,18 @@ import java.util.List;
  */
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(ItemData item);
+    }
+    private final OnItemClickListener listener;
+
     // Usually involves inflating a layout from XML and returning the holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView title, author;
+        public ImageView img;;
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -29,16 +42,35 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
             title = (TextView) itemView.findViewById(R.id.title);
             author = (TextView) itemView.findViewById(R.id.author);
+            img = (ImageView) itemView.findViewById(R.id.img);
 
         }
+        public void bind(final ItemData data, final OnItemClickListener listener) {
+            title.setText(data.getTitle());
+            author.setText("Diposting oleh : "+ data.getAuthor() + " pada  "+ data.getTgl());
+            Ion.with(img)
+                    .error(R.drawable.beasiswa_default)
+                    .load(data.getImgUrl());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(data);
+                }
+            });
+
+        }
+
     }
+
 
 
     private List<ItemData> datas;
 
     // Pass in the contact array into the constructor
-    public RvAdapter(List<ItemData> datas) {
+    public RvAdapter(List<ItemData> datas, OnItemClickListener listener) {
         this.datas = datas;
+        this.listener = listener;
+
     }
 
     @Override
@@ -58,11 +90,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(RvAdapter.ViewHolder viewHolder, int position) {
         ItemData data = datas.get(position);
-
-        TextView title = viewHolder.title;
-        title.setText(data.getTitle());
-        TextView author = viewHolder.author;
-        author.setText("Diposting oleh : "+ data.getAuthor() + " pada  "+ data.getTgl());
+        viewHolder.bind(data,listener);
     }
 
     @Override
