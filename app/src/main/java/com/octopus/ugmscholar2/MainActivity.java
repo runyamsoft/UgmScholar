@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("date", item.getTgl());
                 intent.putExtra("img", item.getImgUrl());
                 intent.putExtra("title", item.getTitle());
+                intent.putExtra("url",item.getDirectUrl());
                 startActivity(intent);
             }
         });
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         tmpData.setTitle(article.select(".uk-article-title").text());
                         tmpData.setAuthor(article.select(".uk-article-meta a").first().text());
                         tmpData.setTgl(article.select(".uk-article-meta time").first().text());
+                        tmpData.setDirectUrl(article.select(".uk-article-title a").first().attr("href"));
                         if (article.select("img").size() > 0) {
                             tmpData.setImgUrl("http://ditmawa.ugm.ac.id" + article.select("img").first().attr("src"));
                         } else {

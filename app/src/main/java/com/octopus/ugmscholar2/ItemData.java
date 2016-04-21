@@ -8,6 +8,7 @@ public class ItemData {
     private String imgUrl;
     private String tgl;
     private String author;
+    private String directUrl;
 
     public String getTitle() {
         return title;
@@ -39,5 +40,12 @@ public class ItemData {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getDirectUrl() {
+        return directUrl;
+    }
+    public void setDirectUrl(String directUrl) {
+        this.directUrl = directUrl;
     }
 }
