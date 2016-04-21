@@ -1,5 +1,6 @@
 package com.octopus.ugmscholar2;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -48,7 +49,13 @@ public class MainActivity extends AppCompatActivity {
         final RvAdapter rvAdapter = new RvAdapter(itemDatas, new RvAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ItemData item) {
-                Log.d("ASDSAD", item.getTitle());
+                Intent intent = new Intent(MainActivity.this, InfoDetailsActivity.class);
+                intent.putExtra("title", item.getTitle());
+                intent.putExtra("author", item.getAuthor());
+                intent.putExtra("date", item.getTgl());
+                intent.putExtra("img", item.getImgUrl());
+                intent.putExtra("title", item.getTitle());
+                startActivity(intent);
             }
         });
         rv.setAdapter(rvAdapter);
