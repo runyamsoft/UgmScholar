@@ -28,4 +28,5 @@ dependencies {
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.twotoasters.jazzylistview:library:1.2.1'
     compile 'com.twotoasters.jazzylistview:library-recyclerview:1.2.1'
+    compile 'com.android.support:cardview-v7:23.+'
 }

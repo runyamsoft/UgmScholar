@@ -1,21 +1,19 @@
 package com.octopus.ugmscholar2;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.twotoasters.jazzylistview.effects.FadeEffect;
+import com.twotoasters.jazzylistview.effects.SlideInEffect;
 import com.twotoasters.jazzylistview.recyclerview.JazzyRecyclerViewScrollListener;
 
 import org.jsoup.Jsoup;
@@ -30,7 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List <ItemData> itemDatas;
-    private RecyclerView rv;
+    RecyclerView rv;
     int pageCounter;
 
     @Override
@@ -60,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         rv.setAdapter(rvAdapter);
-        rv.addOnScrollListener(new JazzyRecyclerViewScrollListener());
+        JazzyRecyclerViewScrollListener jrv = new JazzyRecyclerViewScrollListener();
+        jrv.setTransitionEffect(new FadeEffect());
+        rv.addOnScrollListener(jrv);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
 
